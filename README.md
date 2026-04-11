@@ -63,6 +63,10 @@ Click [here](SapiLM.md) to download the SapiLM installer for your operating syst
 ```bash
 pip install sapilm-1.0.0-py3-none-any.whl
 ```
+If you have problems with terminal characters on **Windows**, run the command below, close all terminal windows, and open them again.
+```bash
+reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
+```
 
 ## Usage
 
