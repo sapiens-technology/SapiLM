@@ -42,6 +42,10 @@ If version 3.11 is displayed, your environment was successfully created with the
 ```bash
 Python 3.11.4
 ```
+Linux:
+```bash
+Python 3.11.8
+```
 
 Update the pip package manager:
 ---
