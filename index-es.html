@@ -128,7 +128,7 @@
                         <div class="grid grid-cols-3 gap-2">
                             <div>
                                 <label class="block text-xs mb-1">Temperatura</label>
-                                <input type="number" id="param-temp" value="0.7" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-sm">
+                                <input type="number" id="param-temp" value="0.5" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-sm">
                             </div>
                             <div>
                                 <label class="block text-xs mb-1">Tokens Máx</label>
@@ -403,7 +403,7 @@
             setRangeValue('param-humor', 'value-humor', 0.5);
             setRangeValue('param-formality', 'value-formality', 0.5);
             setRangeValue('param-political', 'value-political', 0.5);
-            document.getElementById('param-temp').value = 0.7;
+            document.getElementById('param-temp').value = 0.5;
             document.getElementById('param-max-tokens').value = '';
             const language = navigator.language || navigator.userLanguage;
             document.getElementById('param-language').value = language;
@@ -730,12 +730,14 @@
             const deep_reasoning_value = document.getElementById('deep-reasoning').checked;
             let reasoning_value = parseFloat(document.getElementById('param-reasoning').value);
             if (deep_reasoning_value) { reasoning_value = 1.0; }
+            let temperature_value = parseFloat(document.getElementById('param-temp').value);
+            if (temperature_value >= 0.25 && temperature_value <= 0.75) { temperature_value = 0.5; }
             const payload = {
                 user_code: document.getElementById('param-user-code').value,
                 model_name: model_name_value,
                 messages: conversationHistory,
                 stream: is_stream,
-                temperature: parseFloat(document.getElementById('param-temp').value),
+                temperature: temperature_value,
                 reasoning: reasoning_value,
                 reflection: reflection_value,
                 max_tokens: parseInt(document.getElementById('param-max-tokens').value) || null,
