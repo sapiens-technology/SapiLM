@@ -65,7 +65,7 @@ python -m pip install --upgrade pip --timeout 120
 Click [here](SapiLM.md) to download the SapiLM installer for your operating system.
 
 ```bash
-pip install sapilm-1.0.7-py3-none-any.whl
+pip install sapilm-1.0.8-py3-none-any.whl
 ```
 If you have problems with terminal characters on **Windows**, run the command below, close all terminal windows, and open them again.
 ```bash
