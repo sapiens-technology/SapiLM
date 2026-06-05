@@ -1440,6 +1440,9 @@
             if (interval === null) return;
             clearInterval(interval);
             interval = null;
+            setRangeValue('param-reasoning', 'value-reasoning', 0);
+            document.getElementById('param-reflection').checked = false;
+            document.getElementById('deep-reasoning').checked = false;
         }
         function resetTimer(training_timer=false) {
             clearInterval(interval);
