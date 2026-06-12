@@ -1412,6 +1412,7 @@
             let estimated_seconds = 0;
             if (fine_tuning && !model) { estimated_seconds += bytes / 2456; }
             if (fine_tuning && model) { estimated_seconds += bytes / 3442623; }
+            if (fine_tuning) { estimated_seconds += estimated_seconds * 0.5323; }
             if (training) { estimated_seconds += (bytes / 1203438) + 21; }
             if (presets) { estimated_seconds += 97; }
             if (supplements) { estimated_seconds += 424; }
