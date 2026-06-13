@@ -91,6 +91,7 @@ Aqui está a documentação dos argumentos em formato de tabela Markdown:
 | `--multi`               | flag    | `False`   | Enables multiprocessing for parallel computation in the API.                                        |
 | `--threads`             | flag    | `False`   | Enables the use of each CPU core via dedicated threads.                                             |
 | `--cache`               | flag    | `False`   | Enables model caching to speed up subsequent inferences.                                            |
+| `--workers`             | int     | 1         | Maximum number of workers that can persist in memory. Requests exceeding this limit will be queued. |
 | `--loop`                | flag    | `False`   | Runs the API server in an infinite loop to prevent crashes due to errors.                           |
 | `--outkey`              | flag    | `False`   | Generates an output key for validation by the Sapiens Technology team.                              |
 | `--valkey`              | string  | `''`      | Validates the software license using a provided key.                                                |
@@ -106,6 +107,8 @@ Aqui está a documentação dos argumentos em formato de tabela Markdown:
 | `--gain`                | float   | `None`    | Controls information gain during training (0 to 1). Lower values make the model lighter and faster. |
 | `--name`                | string  | `''`      | Sets the name of the generated model.                                                               |
 | `--fit`                 | string  | `''`      | Path to a JSON file for fine-tuning.                                                                |
+| `--version`             | flag    | `False`   | Displays the current version of SapiLM.                                                             |
+| `--v`                   | flag    | `False`   | Displays the current version of SapiLM.                                                             |
 
 ### Examples
 
