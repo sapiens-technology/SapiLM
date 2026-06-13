@@ -1162,8 +1162,8 @@
                 const bytes = base64Length * 0.75;
                 let parameters = bytes / 70;
                 let extra = 0;
-                if (presets && supplements) extra = 5000000000;
-                else if (supplements) extra = 4000000000;
+                if (presets && supplements) extra = 3000000000;
+                else if (supplements) extra = 2000000000;
                 else if (presets) extra = 250000000;
                 else extra = 100000000;
                 parameters += extra;
