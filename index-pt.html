@@ -475,7 +475,7 @@
                 if (pre.previousElementSibling && pre.previousElementSibling.classList.contains('code-toolbar')) return;
                 const code = pre.querySelector('code');
                 const lang = Array.from(code.classList).find(c => c.startsWith('language-'))?.replace('language-', '') || 'code';
-                const content = code.innerText;
+                const content = code.textContent;
                 if (lang === 'html' || content.trim().startsWith('<!DOCTYPE') || content.trim().startsWith('<html')) {
                     const uniqueId = Math.random().toString(36).substr(2, 9);
                     const artifactSession = document.createElement('div');
@@ -531,6 +531,7 @@
                     `;
                     const iframe = document.createElement('iframe');
                     iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                    iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                     iframe.srcdoc = content.includes('<html') ? content : `<!DOCTYPE html><html><body>${content}</body></html>`;
                     artifactSession.appendChild(toolbar);
                     artifactSession.appendChild(iframe);
@@ -824,6 +825,8 @@
             let fullAnswer = "";
             let buffer = ""; 
             let lastChunkData = null;
+            let previousResponse = "";
+            if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].role === 'assistant') { previousResponse = conversationHistory[conversationHistory.length - 1].content; }
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
@@ -837,7 +840,9 @@
                         if (chunk.answer) {
                             streamTokenCount++;
                             lastChunkData = chunk;
-                            fullAnswer = chunk.answer;
+                            let currentAnswer = chunk.answer;
+                            if (previousResponse && currentAnswer.startsWith(previousResponse) && currentAnswer.length > previousResponse.length) { currentAnswer = currentAnswer.substring(previousResponse.length).trimStart(); }
+                            fullAnswer = currentAnswer;
                             target.innerHTML = marked.parse(formatSpecialBlocks(fullAnswer, true));
                             container.scrollTop = container.scrollHeight;
                             if (streamTokenCount == 1) { stop_timer = true; }
@@ -849,13 +854,17 @@
                 try {
                     const chunk = JSON.parse(buffer);
                     lastChunkData = chunk;
-                    fullAnswer = chunk.answer;
+                    let currentAnswer = chunk.answer;
+                    if (previousResponse && currentAnswer.startsWith(previousResponse) && currentAnswer.length > previousResponse.length) { currentAnswer = currentAnswer.substring(previousResponse.length).trimStart(); }
+                    fullAnswer = currentAnswer;
                     target.innerHTML = marked.parse(formatSpecialBlocks(fullAnswer, true));
                 } catch(e) {}
             }
             if (lastChunkData) {
                 processMetadata(aiMessageWrapper, lastChunkData);
                 processCodeBlocks(target);
+                const codeBlockCount = (fullAnswer.match(/```/g) || []).length;
+                if (codeBlockCount % 2 !== 0) { fullAnswer += '\n```\n'; }
                 conversationHistory.push({ role: 'assistant', content: fullAnswer });
                 renderMathInElement(aiMessageWrapper);
                 const actions = aiMessageWrapper.querySelector('.msg-actions');
@@ -868,16 +877,25 @@
         }
         function renderFullResponse(data, wrapper) {
             const target = wrapper.querySelector('.msg-content');
-            const displayContent = formatSpecialBlocks(data.answer);
+            let finalAnswer = data.answer;
+            let previousResponse = "";
+            if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].role === 'assistant') {
+                previousResponse = conversationHistory[conversationHistory.length - 1].content;
+                if (finalAnswer.startsWith(previousResponse) && finalAnswer.length > previousResponse.length) { finalAnswer = finalAnswer.substring(previousResponse.length).trimStart(); }
+            }
+            const displayContent = formatSpecialBlocks(finalAnswer);
             target.innerHTML = marked.parse(displayContent);
             processCodeBlocks(target);
+            data.answer = finalAnswer;
             processMetadata(wrapper, data);
-            conversationHistory.push({ role: 'assistant', content: data.answer });
+            const codeBlockCount = (finalAnswer.match(/```/g) || []).length;
+            if (codeBlockCount % 2 !== 0) { finalAnswer += '\n```\n'; }
+            conversationHistory.push({ role: 'assistant', content: finalAnswer });
             renderMathInElement(wrapper);
             const actions = wrapper.querySelector('.msg-actions');
             if (actions) {
                 actions.classList.remove('hidden');
-                actions.querySelector('[title="Copiar Resposta"]').dataset.rawContent = data.answer;
+                actions.querySelector('[title="Copiar Resposta"]').dataset.rawContent = finalAnswer;
             }
             document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
         }
@@ -1050,18 +1068,20 @@
                 }
                 if (hasCharts) {
                     data.javascript_charts.forEach((chartCode, idx) => {
+                        const uniqueId = Math.random().toString(36).substr(2, 9);
                         const chartSession = document.createElement('div');
                         const toolbar = document.createElement('div');
                         toolbar.className = "flex justify-between items-center mb-2 bg-slate-900/50 p-2 rounded-t-lg border-x border-t border-slate-700";
+                        window[`expandChart_${uniqueId}`] = () => openFullscreen(`Gráfico ${idx + 1}`, chartCode);
                         toolbar.innerHTML = `
                             <div class="text-[10px] text-blue-400 uppercase font-bold flex items-center gap-1"><i data-lucide="bar-chart-3" size="10"></i> Gráfico ${idx + 1}</div>
                             <div class="flex gap-2">
-                                <button onclick="window.expandChart(${idx})" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white"><i data-lucide="maximize" size="14"></i></button>
+                                <button onclick="window.expandChart_${uniqueId}()" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white"><i data-lucide="maximize" size="14"></i></button>
                             </div>
                         `;
-                        window.expandChart = (i) => openFullscreen(`Gráfico ${i+1}`, data.javascript_charts[i]);
                         const iframe = document.createElement('iframe');
                         iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                        iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                         iframe.srcdoc = chartCode.includes('<html') ? chartCode : `<!DOCTYPE html><html><body>${chartCode}</body></html>`;
                         chartSession.appendChild(toolbar);
                         chartSession.appendChild(iframe);
@@ -1070,43 +1090,38 @@
                 }
                 if (hasArtifacts && typeof data.artifacts[0] === 'string') {
                     const escapeHtml = (text) => text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    window.expandArtifact = (i) => openFullscreen(`Artefato ${i+1}`, data.artifacts[i]);
-                    window.viewArtifactCode = (i) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        const codeViewHtml = `<div style="padding: 20px; background: #0f172a; color: #e2e8f0; height: 100%; overflow: auto; font-family: monospace; white-space: pre-wrap;">${escapeHtml(htmlContent)}</div>`;
-                        openFullscreen(`Código Fonte - Artefato ${i+1}`, codeViewHtml);
-                    };
-                    window.downloadArtifact = (i) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<head><meta charset="UTF-8"></head>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        const blob = new Blob([htmlContent], { type: 'text/html' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `artefato_${i+1}.html`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        URL.revokeObjectURL(url);
-                    };
-                    window.copyArtifactCode = (i, btnElement) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        navigator.clipboard.writeText(htmlContent).then(() => {
-                            const originalHtml = btnElement.innerHTML;
-                            btnElement.innerHTML = `<i data-lucide="check" size="14" class="text-emerald-400"></i>`;
-                            if (window.lucide) window.lucide.createIcons();
-                            setTimeout(() => {
-                                btnElement.innerHTML = originalHtml;
-                                if (window.lucide) window.lucide.createIcons();
-                            }, 2000);
-                        }).catch(err => {
-                            console.error('Erro ao copiar o código: ', err);
-                            alert('Falha ao copiar o código.');
-                        });
-                    };
                     data.artifacts.forEach((htmlCode, idx) => {
+                        const uniqueId = Math.random().toString(36).substr(2, 9);
+                        window[`expandArtifact_${uniqueId}`] = () => openFullscreen(`Artefato ${idx+1}`, htmlCode);
+                        window[`viewArtifactCode_${uniqueId}`] = () => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            const codeViewHtml = `<div style="padding: 20px; background: #0f172a; color: #e2e8f0; height: 100%; overflow: auto; font-family: monospace; white-space: pre-wrap;">${escapeHtml(content)}</div>`;
+                            openFullscreen(`Código Fonte - Artefato ${idx+1}`, codeViewHtml);
+                        };
+                        window[`downloadArtifact_${uniqueId}`] = () => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<head><meta charset="UTF-8"></head>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            const blob = new Blob([content], { type: 'text/html' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `artefato_${idx+1}.html`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        };
+                        window[`copyArtifactCode_${uniqueId}`] = (btnElement) => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            navigator.clipboard.writeText(content).then(() => {
+                                const originalHtml = btnElement.innerHTML;
+                                btnElement.innerHTML = `<i data-lucide="check" size="14" class="text-emerald-400"></i>`;
+                                if (window.lucide) window.lucide.createIcons();
+                                setTimeout(() => {
+                                    btnElement.innerHTML = originalHtml;
+                                    if (window.lucide) window.lucide.createIcons();
+                                }, 2000);
+                            });
+                        };
                         const artifactSession = document.createElement('div');
                         const toolbar = document.createElement('div');
                         toolbar.className = "flex justify-between items-center mb-2 bg-slate-900/50 p-2 rounded-t-lg border-x border-t border-slate-700";
@@ -1115,22 +1130,23 @@
                                 <i data-lucide="layout" size="10"></i> Artefato ${idx + 1}
                             </div>
                             <div class="flex gap-2">
-                                <button onclick="window.viewArtifactCode(${idx})" title="Visualizar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.viewArtifactCode_${uniqueId}()" title="Visualizar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="code" size="14"></i>
                                 </button>
-                                <button onclick="window.copyArtifactCode(${idx}, this)" title="Copiar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.copyArtifactCode_${uniqueId}(this)" title="Copiar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="copy" size="14"></i>
                                 </button>
-                                <button onclick="window.downloadArtifact(${idx})" title="Baixar Artefato" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.downloadArtifact_${uniqueId}()" title="Baixar Artefato" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="download" size="14"></i>
                                 </button>
-                                <button onclick="window.expandArtifact(${idx})" title="Expandir Tela Cheia" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.expandArtifact_${uniqueId}()" title="Expandir Tela Cheia" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="maximize" size="14"></i>
                                 </button>
                             </div>
                         `;
                         const iframe = document.createElement('iframe');
                         iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                        iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                         iframe.srcdoc = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html><html><body>${htmlCode}</body></html>`;
                         artifactSession.appendChild(toolbar);
                         artifactSession.appendChild(iframe);
