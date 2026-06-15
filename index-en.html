@@ -141,14 +141,14 @@
                         </div>
                         <div>
                             <label class="block text-xs mb-1 text-indigo-300">
-                                Reasoning: <span id="value-reasoning">0.00</span>
+                                Think (Reasoning): <span id="value-reasoning">0.00</span>
                             </label>
                             <input type="range" id="param-reasoning" min="0" max="1" step="0.01" value="0" class="w-full">
                         </div>
 
                         <div>
                             <label class="block text-xs mb-1 text-emerald-300">
-                                Creativity: <span id="value-creativity">0.50</span>
+                                Imagination (Creativity): <span id="value-creativity">0.50</span>
                             </label>
                             <input type="range" id="param-creativity" min="0" max="1" step="0.01" value="0.5" class="w-full">
                         </div>
@@ -162,14 +162,14 @@
 
                         <div>
                             <label class="block text-xs mb-1 text-blue-300">
-                                Formality: <span id="value-formality">0.50</span>
+                                Rigor (Formality): <span id="value-formality">0.50</span>
                             </label>
                             <input type="range" id="param-formality" min="0" max="1" step="0.01" value="0.5" class="w-full">
                         </div>
 
                         <div>
                             <label class="block text-xs mb-1 text-red-300">
-                                Political Spectrum: <span id="value-political">0.50</span>
+                                Left or Right (Political Spectrum): <span id="value-political">0.50</span>
                             </label>
                             <input type="range" id="param-political" min="0" max="1" step="0.01" value="0.5" class="w-full">
                         </div>
@@ -204,7 +204,7 @@
                             <p class="text-sm text-slate-400">Click to select Dataset</p>
                             <p id="train-file-name" class="text-xs text-indigo-400 mt-1"></p>
                         </div>
-                        <input type="text" id="train-model-name" placeholder="Model name" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm">
+                        <input type="text" id="train-model-name" placeholder="Model Name" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm">
                         <div class="flex gap-4">
                             <label class="text-xs flex items-center gap-1"><input type="checkbox" id="train-presets"> Presets</label>
                             <label class="text-xs flex items-center gap-1"><input type="checkbox" id="train-supps"> Supplements</label>
@@ -405,7 +405,7 @@
             setRangeValue('param-political', 'value-political', 0.5);
             document.getElementById('param-temp').value = 0.7;
             document.getElementById('param-max-tokens').value = '';
-            const language = navigator.language || 'en-US';
+            const language = navigator.language || navigator.userLanguage;
             document.getElementById('param-language').value = language;
             document.getElementById('param-reflection').checked = false;
             document.getElementById('deep-reasoning').checked = false;
