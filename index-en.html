@@ -141,14 +141,14 @@
                         </div>
                         <div>
                             <label class="block text-xs mb-1 text-indigo-300">
-                                Think (Reasoning): <span id="value-reasoning">0.00</span>
+                                Reasoning: <span id="value-reasoning">0.00</span>
                             </label>
                             <input type="range" id="param-reasoning" min="0" max="1" step="0.01" value="0" class="w-full">
                         </div>
 
                         <div>
                             <label class="block text-xs mb-1 text-emerald-300">
-                                Imagination (Creativity): <span id="value-creativity">0.50</span>
+                                Creativity: <span id="value-creativity">0.50</span>
                             </label>
                             <input type="range" id="param-creativity" min="0" max="1" step="0.01" value="0.5" class="w-full">
                         </div>
@@ -162,14 +162,14 @@
 
                         <div>
                             <label class="block text-xs mb-1 text-blue-300">
-                                Rigor (Formality): <span id="value-formality">0.50</span>
+                                Formality: <span id="value-formality">0.50</span>
                             </label>
                             <input type="range" id="param-formality" min="0" max="1" step="0.01" value="0.5" class="w-full">
                         </div>
 
                         <div>
                             <label class="block text-xs mb-1 text-red-300">
-                                Left or Right (Political Spectrum): <span id="value-political">0.50</span>
+                                Political Spectrum: <span id="value-political">0.50</span>
                             </label>
                             <input type="range" id="param-political" min="0" max="1" step="0.01" value="0.5" class="w-full">
                         </div>
@@ -204,7 +204,7 @@
                             <p class="text-sm text-slate-400">Click to select Dataset</p>
                             <p id="train-file-name" class="text-xs text-indigo-400 mt-1"></p>
                         </div>
-                        <input type="text" id="train-model-name" placeholder="Model Name" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm">
+                        <input type="text" id="train-model-name" placeholder="Model name" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm">
                         <div class="flex gap-4">
                             <label class="text-xs flex items-center gap-1"><input type="checkbox" id="train-presets"> Presets</label>
                             <label class="text-xs flex items-center gap-1"><input type="checkbox" id="train-supps"> Supplements</label>
@@ -221,11 +221,11 @@
                         <select id="ft-model-list" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm"></select>
                         <div class="border-2 border-dashed border-slate-700 p-4 rounded-lg text-center hover:border-indigo-500 transition cursor-pointer relative">
                             <input type="file" id="ft-file" accept=".json" class="absolute inset-0 opacity-0 cursor-pointer">
-                            <p class="text-sm text-slate-400">Select Tuning JSON</p>
+                            <p class="text-sm text-slate-400">Select Fine-Tuning JSON</p>
                             <p id="ft-file-name" class="text-xs text-indigo-400 mt-1"></p>
                         </div>
                         <input type="text" id="ft-output-name" placeholder="Generated model name" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm">
-                        <button onclick="runTraining('fine-tuning')" class="w-full bg-emerald-600 py-2 rounded-lg font-medium hover:bg-emerald-500 transition">Run Fine-Tuning</button>
+                        <button onclick="runTraining('fine-tuning')" class="w-full bg-emerald-600 py-2 rounded-lg font-medium hover:bg-emerald-500 transition">Execute Fine-Tuning</button>
                     </div>
                 </div>
                 <div class="glass-panel p-6 rounded-xl space-y-4">
@@ -248,7 +248,7 @@
             <div id="training-status" class="hidden glass-panel p-8 rounded-xl flex flex-col items-center justify-center space-y-4 relative overflow-hidden">
                 <span class="loader"></span>
                 <p class="text-lg animate-pulse">Processing task on the server...</p>
-                <p class="text-sm text-slate-400">This may take a few minutes depending on your hardware.</p>
+                <p class="text-sm text-slate-400">This may take a few minutes depending on the hardware.</p>
                 <sup class="text-slate-400" id="parameters_text">Training approximately <span id="parameters">0.25B</span> parameters.</sup>
                 <sup id="training_timer" class="text-slate-400">00:00:00.000</sup>
                 <div class="absolute bottom-0 left-0 w-full h-1.5 bg-slate-700">
@@ -317,12 +317,12 @@
         let progressInterval = null;
         let expectedDurationMs = 0;
         const SLASH_COMMANDS = [
-            { cmd: '/code', desc: 'requests the creation of a programming code' },
+            { cmd: '/code', desc: 'requests the creation of programming code' },
             { cmd: '/artifact', desc: 'requests the creation of a web application' },
             { cmd: '/web', desc: 'requests an internet search' },
             { cmd: '/image', desc: 'requests the creation of an image' },
             { cmd: '/logo', desc: 'requests the creation of a logo' },
-            { cmd: '/audio', desc: 'requests converting text to speech' },
+            { cmd: '/audio', desc: 'requests text-to-speech conversion' },
             { cmd: '/music', desc: 'requests the creation of a musical melody without vocals' },
             { cmd: '/video', desc: 'requests the creation of a short video without audio' },
             { cmd: '/pdf', desc: 'requests the creation of a PDF document' },
@@ -333,8 +333,8 @@
             { cmd: '/powerpoint', desc: 'requests the creation of a Microsoft PowerPoint presentation' },
             { cmd: '/chart', desc: 'requests the creation of a visual chart' },
             { cmd: '/flowchart', desc: 'requests the creation of a flowchart' },
-            { cmd: '/youtube-video-download', desc: 'requests downloading a YouTube video' },
-            { cmd: '/youtube-audio-download', desc: 'requests downloading audio from YouTube' },
+            { cmd: '/youtube-video-download', desc: 'requests the download of a YouTube video' },
+            { cmd: '/youtube-audio-download', desc: 'requests the download of YouTube audio' },
             { cmd: '/deep-reasoning', desc: 'requests deep reasoning from the model' }
         ];
         function renderSlashCommands(filteredCommands) {
@@ -405,7 +405,7 @@
             setRangeValue('param-political', 'value-political', 0.5);
             document.getElementById('param-temp').value = 0.7;
             document.getElementById('param-max-tokens').value = '';
-            const language = navigator.language || navigator.userLanguage;
+            const language = navigator.language || 'en-US';
             document.getElementById('param-language').value = language;
             document.getElementById('param-reflection').checked = false;
             document.getElementById('deep-reasoning').checked = false;
@@ -419,12 +419,12 @@
             event.target.value = '';
             for (let file of files) {
                 if (attachedFiles.length >= MAX_FILES) {
-                    customAlert(`You can upload up to ${MAX_FILES} files simultaneously.`, 'alert');
+                    customAlert(`You can upload a maximum of ${MAX_FILES} files simultaneously.`, 'alert');
                     break;
                 }
                 const ext = file.name.split('.').pop().toLowerCase();
                 if (!ALLOWED_EXTENSIONS.includes(ext)) {
-                    customAlert(`The .${ext} extension of the file "${file.name}" is not supported.`, 'alert');
+                    customAlert(`The extension .${ext} of the file "${file.name}" is not supported.`, 'alert');
                     continue;
                 }
                 try {
@@ -434,7 +434,7 @@
                         base64_string: base64,
                         type: ext
                     });
-                } catch (err) { console.error('Error reading file', err); }
+                } catch (err) { console.error('Read error', err); }
             }
             renderAttachedFiles();
         }
@@ -475,7 +475,7 @@
                 if (pre.previousElementSibling && pre.previousElementSibling.classList.contains('code-toolbar')) return;
                 const code = pre.querySelector('code');
                 const lang = Array.from(code.classList).find(c => c.startsWith('language-'))?.replace('language-', '') || 'code';
-                const content = code.innerText;
+                const content = code.textContent;
                 if (lang === 'html' || content.trim().startsWith('<!DOCTYPE') || content.trim().startsWith('<html')) {
                     const uniqueId = Math.random().toString(36).substr(2, 9);
                     const artifactSession = document.createElement('div');
@@ -531,6 +531,7 @@
                     `;
                     const iframe = document.createElement('iframe');
                     iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                    iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                     iframe.srcdoc = content.includes('<html') ? content : `<!DOCTYPE html><html><body>${content}</body></html>`;
                     artifactSession.appendChild(toolbar);
                     artifactSession.appendChild(iframe);
@@ -567,10 +568,10 @@
         };
         window.previewCode = (btn) => {
             const code = btn.closest('.code-toolbar').nextElementSibling.innerText;
-            openFullscreen('Visualização HTML', code);
+            openFullscreen('HTML Preview', code);
         };
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('param-language').value = navigator.language || 'pt-BR';
+            document.getElementById('param-language').value = navigator.language || 'en-US';
             lucide.createIcons();
             refreshModels();
             const textarea = document.getElementById('user-input');
@@ -665,7 +666,7 @@
                     if (result === false || result.success === false) { customAlert('Could not reload this model.', 'alert'); }
                     else { customAlert('The model was successfully reloaded.', 'alert'); }
                 } catch (error) {
-                    console.error('Error reloading model:', error);
+                    console.error('Error reloading the model:', error);
                     customAlert('An error occurred while communicating with the server.', 'alert');
                 } finally { toggleChatInputs(false); }
             });
@@ -683,7 +684,7 @@
                     if (result === false || result.success === false) { customAlert('Cannot delete this model.', 'alert'); }
                     else { refreshModels(); }
                 } catch (error) {
-                    console.error('Error deleting model:', error);
+                    console.error('Error deleting the model:', error);
                     customAlert('An error occurred while communicating with the server.', 'alert');
                 }
             });
@@ -803,7 +804,7 @@
         };
         window.regenerateMessage = (btn) => {
             if (isProcessing) {
-                customAlert("Wait for the current processing to finish.", "alert");
+                customAlert("Please wait for the current processing to finish.", "alert");
                 return;
             }
             const wrapper = btn.closest('.justify-start'); 
@@ -824,6 +825,8 @@
             let fullAnswer = "";
             let buffer = ""; 
             let lastChunkData = null;
+            let previousResponse = "";
+            if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].role === 'assistant') { previousResponse = conversationHistory[conversationHistory.length - 1].content; }
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
@@ -837,7 +840,9 @@
                         if (chunk.answer) {
                             streamTokenCount++;
                             lastChunkData = chunk;
-                            fullAnswer = chunk.answer;
+                            let currentAnswer = chunk.answer;
+                            if (previousResponse && currentAnswer.startsWith(previousResponse) && currentAnswer.length > previousResponse.length) { currentAnswer = currentAnswer.substring(previousResponse.length).trimStart(); }
+                            fullAnswer = currentAnswer;
                             target.innerHTML = marked.parse(formatSpecialBlocks(fullAnswer, true));
                             container.scrollTop = container.scrollHeight;
                             if (streamTokenCount == 1) { stop_timer = true; }
@@ -849,35 +854,48 @@
                 try {
                     const chunk = JSON.parse(buffer);
                     lastChunkData = chunk;
-                    fullAnswer = chunk.answer;
+                    let currentAnswer = chunk.answer;
+                    if (previousResponse && currentAnswer.startsWith(previousResponse) && currentAnswer.length > previousResponse.length) { currentAnswer = currentAnswer.substring(previousResponse.length).trimStart(); }
+                    fullAnswer = currentAnswer;
                     target.innerHTML = marked.parse(formatSpecialBlocks(fullAnswer, true));
                 } catch(e) {}
             }
             if (lastChunkData) {
                 processMetadata(aiMessageWrapper, lastChunkData);
                 processCodeBlocks(target);
+                const codeBlockCount = (fullAnswer.match(/```/g) || []).length;
+                if (codeBlockCount % 2 !== 0) { fullAnswer += '\n```\n'; }
                 conversationHistory.push({ role: 'assistant', content: fullAnswer });
                 renderMathInElement(aiMessageWrapper);
                 const actions = aiMessageWrapper.querySelector('.msg-actions');
                 if (actions) {
                     actions.classList.remove('hidden');
-                    actions.querySelector('[title="Copy Response"]').dataset.rawContent = fullAnswer;
+                    actions.querySelector('[title="Copy Answer"]').dataset.rawContent = fullAnswer;
                 }
                 container.scrollTop = container.scrollHeight;
             }
         }
         function renderFullResponse(data, wrapper) {
             const target = wrapper.querySelector('.msg-content');
-            const displayContent = formatSpecialBlocks(data.answer);
+            let finalAnswer = data.answer;
+            let previousResponse = "";
+            if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].role === 'assistant') {
+                previousResponse = conversationHistory[conversationHistory.length - 1].content;
+                if (finalAnswer.startsWith(previousResponse) && finalAnswer.length > previousResponse.length) { finalAnswer = finalAnswer.substring(previousResponse.length).trimStart(); }
+            }
+            const displayContent = formatSpecialBlocks(finalAnswer);
             target.innerHTML = marked.parse(displayContent);
             processCodeBlocks(target);
+            data.answer = finalAnswer;
             processMetadata(wrapper, data);
-            conversationHistory.push({ role: 'assistant', content: data.answer });
+            const codeBlockCount = (finalAnswer.match(/```/g) || []).length;
+            if (codeBlockCount % 2 !== 0) { finalAnswer += '\n```\n'; }
+            conversationHistory.push({ role: 'assistant', content: finalAnswer });
             renderMathInElement(wrapper);
             const actions = wrapper.querySelector('.msg-actions');
             if (actions) {
                 actions.classList.remove('hidden');
-                actions.querySelector('[title="Copy Response"]').dataset.rawContent = data.answer;
+                actions.querySelector('[title="Copy Answer"]').dataset.rawContent = finalAnswer;
             }
             document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
         }
@@ -897,7 +915,7 @@
             });
             if (text.includes('<reflection>') && !text.includes('</reflection>')) {
                 text = text.replace(/<reflection>([\s\S]*)$/g, (match, content) => {
-                    return `<div class="reflection-block"><div class="text-xs text-emerald-400 font-bold mb-1 uppercase">Reflecting on the Response...</div><div ${preStyle}>${content}</div></div>`;
+                    return `<div class="reflection-block"><div class="text-xs text-emerald-400 font-bold mb-1 uppercase">Reflecting on the Answer...</div><div ${preStyle}>${content}</div></div>`;
                 });
             }
             return text;
@@ -918,10 +936,10 @@
                 const actions = document.createElement('div');
                 actions.className = "flex gap-2 pt-2 border-t border-slate-700/50 mt-2 msg-actions hidden";
                 actions.innerHTML = `
-                    <button onclick="copyMessage(this)" class="text-slate-400 hover:text-white transition p-1.5 rounded hover:bg-slate-700" title="Copy Response">
+                    <button onclick="copyMessage(this)" class="text-slate-400 hover:text-white transition p-1.5 rounded hover:bg-slate-700" title="Copy Answer">
                         <i data-lucide="copy" size="14"></i>
                     </button>
-                    <button onclick="regenerateMessage(this)" class="text-slate-400 hover:text-white transition p-1.5 rounded hover:bg-slate-700" title="Generate new response">
+                    <button onclick="regenerateMessage(this)" class="text-slate-400 hover:text-white transition p-1.5 rounded hover:bg-slate-700" title="Generate new answer">
                         <i data-lucide="refresh-cw" size="14"></i>
                     </button>
                 `;
@@ -953,7 +971,7 @@
         window.downloadFileBase64 = (base64, type) => {
             const link = document.createElement('a');
             link.href = `data:application/octet-stream;base64,${base64}`;
-            link.download = `arquivo_${Date.now()}.${type}`;
+            link.download = `file_${Date.now()}.${type}`;
             link.click();
         };
         function processMetadata(div, data) {
@@ -988,7 +1006,7 @@
                                 <img src="${imgSrc}" class="w-full h-auto cursor-pointer hover:opacity-95 transition" onclick="openFullscreen('Image Preview', '<img src=\\'${imgSrc}\\' class=\\'max-w-full max-h-full object-contain\\'>')">
                                 <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
                                     <button onclick="downloadFileBase64('${file.base64_string}', '${file.type}')" class="bg-black/60 p-2 rounded-full hover:bg-black/90 text-white" title="Download"><i data-lucide="download" size="16"></i></button>
-                                    <button onclick="openFullscreen('Imagem', '<img src=\\'${imgSrc}\\' class=\\'max-w-full max-h-full object-contain\\'>')" class="bg-black/60 p-2 rounded-full hover:bg-black/90 text-white" title="Expandir"><i data-lucide="maximize" size="16"></i></button>
+                                    <button onclick="openFullscreen('Image', '<img src=\\'${imgSrc}\\' class=\\'max-w-full max-h-full object-contain\\'>')" class="bg-black/60 p-2 rounded-full hover:bg-black/90 text-white" title="Expand Fullscreen"><i data-lucide="maximize" size="16"></i></button>
                                 </div>
                             `;
                             visualWrapper.appendChild(imgContainer);
@@ -1050,18 +1068,20 @@
                 }
                 if (hasCharts) {
                     data.javascript_charts.forEach((chartCode, idx) => {
+                        const uniqueId = Math.random().toString(36).substr(2, 9);
                         const chartSession = document.createElement('div');
                         const toolbar = document.createElement('div');
                         toolbar.className = "flex justify-between items-center mb-2 bg-slate-900/50 p-2 rounded-t-lg border-x border-t border-slate-700";
+                        window[`expandChart_${uniqueId}`] = () => openFullscreen(`Chart ${idx + 1}`, chartCode);
                         toolbar.innerHTML = `
                             <div class="text-[10px] text-blue-400 uppercase font-bold flex items-center gap-1"><i data-lucide="bar-chart-3" size="10"></i> Chart ${idx + 1}</div>
                             <div class="flex gap-2">
-                                <button onclick="window.expandChart(${idx})" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white"><i data-lucide="maximize" size="14"></i></button>
+                                <button onclick="window.expandChart_${uniqueId}()" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white"><i data-lucide="maximize" size="14"></i></button>
                             </div>
                         `;
-                        window.expandChart = (i) => openFullscreen(`Chart ${i+1}`, data.javascript_charts[i]);
                         const iframe = document.createElement('iframe');
                         iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                        iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                         iframe.srcdoc = chartCode.includes('<html') ? chartCode : `<!DOCTYPE html><html><body>${chartCode}</body></html>`;
                         chartSession.appendChild(toolbar);
                         chartSession.appendChild(iframe);
@@ -1070,43 +1090,38 @@
                 }
                 if (hasArtifacts && typeof data.artifacts[0] === 'string') {
                     const escapeHtml = (text) => text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    window.expandArtifact = (i) => openFullscreen(`Artifact ${i+1}`, data.artifacts[i]);
-                    window.viewArtifactCode = (i) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        const codeViewHtml = `<div style="padding: 20px; background: #0f172a; color: #e2e8f0; height: 100%; overflow: auto; font-family: monospace; white-space: pre-wrap;">${escapeHtml(htmlContent)}</div>`;
-                        openFullscreen(`Source Code - Artifact ${i+1}`, codeViewHtml);
-                    };
-                    window.downloadArtifact = (i) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<head><meta charset="UTF-8"></head>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        const blob = new Blob([htmlContent], { type: 'text/html' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `artefato_${i+1}.html`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        URL.revokeObjectURL(url);
-                    };
-                    window.copyArtifactCode = (i, btnElement) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        navigator.clipboard.writeText(htmlContent).then(() => {
-                            const originalHtml = btnElement.innerHTML;
-                            btnElement.innerHTML = `<i data-lucide="check" size="14" class="text-emerald-400"></i>`;
-                            if (window.lucide) window.lucide.createIcons();
-                            setTimeout(() => {
-                                btnElement.innerHTML = originalHtml;
-                                if (window.lucide) window.lucide.createIcons();
-                            }, 2000);
-                        }).catch(err => {
-                            console.error('Error copying code: ', err);
-                            alert('Failed to copy code.');
-                        });
-                    };
                     data.artifacts.forEach((htmlCode, idx) => {
+                        const uniqueId = Math.random().toString(36).substr(2, 9);
+                        window[`expandArtifact_${uniqueId}`] = () => openFullscreen(`Artifact ${idx+1}`, htmlCode);
+                        window[`viewArtifactCode_${uniqueId}`] = () => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            const codeViewHtml = `<div style="padding: 20px; background: #0f172a; color: #e2e8f0; height: 100%; overflow: auto; font-family: monospace; white-space: pre-wrap;">${escapeHtml(content)}</div>`;
+                            openFullscreen(`Source Code - Artifact ${idx+1}`, codeViewHtml);
+                        };
+                        window[`downloadArtifact_${uniqueId}`] = () => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<head><meta charset="UTF-8"></head>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            const blob = new Blob([content], { type: 'text/html' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `artifact_${idx+1}.html`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        };
+                        window[`copyArtifactCode_${uniqueId}`] = (btnElement) => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            navigator.clipboard.writeText(content).then(() => {
+                                const originalHtml = btnElement.innerHTML;
+                                btnElement.innerHTML = `<i data-lucide="check" size="14" class="text-emerald-400"></i>`;
+                                if (window.lucide) window.lucide.createIcons();
+                                setTimeout(() => {
+                                    btnElement.innerHTML = originalHtml;
+                                    if (window.lucide) window.lucide.createIcons();
+                                }, 2000);
+                            });
+                        };
                         const artifactSession = document.createElement('div');
                         const toolbar = document.createElement('div');
                         toolbar.className = "flex justify-between items-center mb-2 bg-slate-900/50 p-2 rounded-t-lg border-x border-t border-slate-700";
@@ -1115,22 +1130,23 @@
                                 <i data-lucide="layout" size="10"></i> Artifact ${idx + 1}
                             </div>
                             <div class="flex gap-2">
-                                <button onclick="window.viewArtifactCode(${idx})" title="View Code" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.viewArtifactCode_${uniqueId}()" title="View Code" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="code" size="14"></i>
                                 </button>
-                                <button onclick="window.copyArtifactCode(${idx}, this)" title="Copy Code" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.copyArtifactCode_${uniqueId}(this)" title="Copy Code" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="copy" size="14"></i>
                                 </button>
-                                <button onclick="window.downloadArtifact(${idx})" title="Download Artifact" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.downloadArtifact_${uniqueId}()" title="Download Artifact" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="download" size="14"></i>
                                 </button>
-                                <button onclick="window.expandArtifact(${idx})" title="Expand Fullscreen" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.expandArtifact_${uniqueId}()" title="Expand Fullscreen" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="maximize" size="14"></i>
                                 </button>
                             </div>
                         `;
                         const iframe = document.createElement('iframe');
                         iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                        iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                         iframe.srcdoc = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html><html><body>${htmlCode}</body></html>`;
                         artifactSession.appendChild(toolbar);
                         artifactSession.appendChild(iframe);
@@ -1223,7 +1239,7 @@
                 document.getElementById('training-progress-bar').style.width = '100%';
                 document.getElementById('training-progress-text').innerText = '100%';
                 setTimeout(() => {
-                    const msg = res.success ? `Task successfully completed in ${formatTime(elapsedMilliseconds)}!` : "The task failed.";
+                    const msg = res.success ? `Task completed successfully in ${formatTime(elapsedMilliseconds)}!` : "The task failed.";
                     customAlert(msg, "alert", () => {
                         statusDiv.classList.add('hidden');
                         document.getElementById('training-progress-bar').style.width = '0%';
@@ -1234,7 +1250,7 @@
                 }, 2000);
 
             } catch (e) { 
-                console.error("Error in training:", e);
+                console.error("Training error:", e);
                 if (progressInterval) clearInterval(progressInterval);
                 customAlert("An error occurred while processing the training.", "alert", () => {
                     statusDiv.classList.add('hidden');
@@ -1279,7 +1295,7 @@
             }, 400); 
         }
         function clearHistory() {
-            customAlert("Do you want to clear the chat history?", 'confirm', () => {
+            customAlert("Do you want to clear the history?", 'confirm', () => {
                 conversationHistory = [];
                 document.getElementById('chat-messages').innerHTML = '';
             });
