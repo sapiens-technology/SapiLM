@@ -113,7 +113,7 @@
                 </div>
                 <div id="inference-settings" class="hidden lg:block settings-anim-wrapper h-full">
                     <div class="glass-panel p-4 rounded-xl space-y-4 h-full overflow-y-auto w-[350px]">
-                        <h3 class="font-semibold border-b border-slate-700 pb-2 flex-shrink-0">Configuraciones de IA</h3>
+                        <h3 class="font-semibold border-b border-slate-700 pb-2 flex-shrink-0">Configuración de IA</h3>
                         <div>
                             <label class="block text-xs mb-1">Modelo Seleccionado</label>
                             <div class="flex gap-2">
@@ -180,11 +180,11 @@
                             <label class="text-xs text-blue-400">Razonamiento Profundo</label>
                         </div>
                         <div>
-                            <label class="block text-xs mb-1">Cód. Usuario (Carpeta)</label>
+                            <label class="block text-xs mb-1">Cód. Usuario (Folder)</label>
                             <input type="text" id="param-user-code" onchange="refreshModels();" placeholder="models" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm">
                         </div>
                         <button onclick="resetRanges()" class="text-xs text-red-400 active:text-red-600 mt-2 uppercase">
-                            Restaurar Valores por Defecto
+                            Restaurar Valores Predeterminados
                         </button>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                 </div>
                 <div class="glass-panel p-6 rounded-xl space-y-4">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold flex items-center gap-2"><i data-lucide="refresh-cw"></i> Pre-entrenamiento Continuo</h3>
+                        <h3 class="text-lg font-semibold flex items-center gap-2"><i data-lucide="refresh-cw"></i> Preentrenamiento Continuo</h3>
                         <button onclick="clearForm('continuous-pre-training')" class="text-slate-400 hover:text-white" title="Limpiar"><i data-lucide="eraser" size="16"></i></button>
                     </div>
                     <div class="space-y-3">
@@ -241,7 +241,7 @@
                             <p id="cpt-file-name" class="text-xs text-indigo-400 mt-1"></p>
                         </div>
                         <input type="text" id="cpt-output-name" placeholder="Nombre del modelo generado" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm">
-                        <button onclick="runTraining('continuous-pre-training')" class="w-full bg-blue-600 py-2 rounded-lg font-medium hover:bg-blue-500 transition">Continuar Pre-entrenamiento</button>
+                        <button onclick="runTraining('continuous-pre-training')" class="w-full bg-blue-600 py-2 rounded-lg font-medium hover:bg-blue-500 transition">Continuar Preentrenamiento</button>
                     </div>
                 </div>
             </div>
@@ -323,7 +323,7 @@
             { cmd: '/image', desc: 'solicita la creación de una imagen' },
             { cmd: '/logo', desc: 'solicita la creación de un logotipo' },
             { cmd: '/audio', desc: 'solicita la conversión de texto a voz' },
-            { cmd: '/music', desc: 'solicita la creación de una melodía musical sin voz' },
+            { cmd: '/music', desc: 'solicita la creación de una melodía musical sin voces' },
             { cmd: '/video', desc: 'solicita la creación de un video corto sin audio' },
             { cmd: '/pdf', desc: 'solicita la creación de un documento PDF' },
             { cmd: '/wordcloud', desc: 'solicita la creación de una nube de palabras' },
@@ -335,7 +335,7 @@
             { cmd: '/flowchart', desc: 'solicita la creación de un diagrama de flujo' },
             { cmd: '/youtube-video-download', desc: 'solicita la descarga de un video de YouTube' },
             { cmd: '/youtube-audio-download', desc: 'solicita la descarga de audio de YouTube' },
-            { cmd: '/deep-reasoning', desc: 'solicita razonamiento profundo del modelo' }
+            { cmd: '/deep-reasoning', desc: 'solicita un razonamiento profundo del modelo' }
         ];
         function renderSlashCommands(filteredCommands) {
             const menu = document.getElementById('slash-commands-menu');
@@ -405,7 +405,7 @@
             setRangeValue('param-political', 'value-political', 0.5);
             document.getElementById('param-temp').value = 0.7;
             document.getElementById('param-max-tokens').value = '';
-            const language = navigator.language || navigator.userLanguage;
+            const language = navigator.language || 'es-ES';
             document.getElementById('param-language').value = language;
             document.getElementById('param-reflection').checked = false;
             document.getElementById('deep-reasoning').checked = false;
@@ -475,14 +475,14 @@
                 if (pre.previousElementSibling && pre.previousElementSibling.classList.contains('code-toolbar')) return;
                 const code = pre.querySelector('code');
                 const lang = Array.from(code.classList).find(c => c.startsWith('language-'))?.replace('language-', '') || 'code';
-                const content = code.innerText;
+                const content = code.textContent;
                 if (lang === 'html' || content.trim().startsWith('<!DOCTYPE') || content.trim().startsWith('<html')) {
                     const uniqueId = Math.random().toString(36).substr(2, 9);
                     const artifactSession = document.createElement('div');
                     artifactSession.className = "my-4";
                     const toolbar = document.createElement('div');
                     toolbar.className = "flex justify-between items-center bg-slate-900/50 p-2 rounded-t-lg border-x border-t border-slate-700";
-                    window[`expandHtml_${uniqueId}`] = () => openFullscreen(`Previsualización HTML`, content);
+                    window[`expandHtml_${uniqueId}`] = () => openFullscreen(`Vista Previa HTML`, content);
                     window[`viewCode_${uniqueId}`] = () => {
                         const escapeHtml = (text) => text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
                         const codeViewHtml = `<div style="padding: 20px; background: #0f172a; color: #e2e8f0; height: 100%; overflow: auto; font-family: monospace; white-space: pre-wrap;">${escapeHtml(content)}</div>`;
@@ -512,10 +512,10 @@
                     };
                     toolbar.innerHTML = `
                         <div class="text-[10px] text-emerald-400 uppercase font-bold flex items-center gap-1">
-                            <i data-lucide="layout" size="10"></i> Previsualización HTML
+                            <i data-lucide="layout" size="10"></i> Vista Previa HTML
                         </div>
                         <div class="flex gap-2">
-                            <button onclick="window.viewCode_${uniqueId}()" title="Visualizar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                            <button onclick="window.viewCode_${uniqueId}()" title="Ver Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                 <i data-lucide="code" size="14"></i>
                             </button>
                             <button onclick="window.copyHtml_${uniqueId}(this)" title="Copiar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
@@ -531,6 +531,7 @@
                     `;
                     const iframe = document.createElement('iframe');
                     iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                    iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                     iframe.srcdoc = content.includes('<html') ? content : `<!DOCTYPE html><html><body>${content}</body></html>`;
                     artifactSession.appendChild(toolbar);
                     artifactSession.appendChild(iframe);
@@ -570,7 +571,7 @@
             openFullscreen('Visualización HTML', code);
         };
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('param-language').value = navigator.language || 'pt-BR';
+            document.getElementById('param-language').value = navigator.language || 'es-ES';
             lucide.createIcons();
             refreshModels();
             const textarea = document.getElementById('user-input');
@@ -653,7 +654,7 @@
         async function reloadModel() {
             toggleChatInputs(true);
             const model_name_value = document.getElementById('param-model-name').value;
-            customAlert(`¿Recargar el modelo ${name}?`, 'confirm', async () => {
+            customAlert(`¿Recargar modelo ${model_name_value}?`, 'confirm', async () => {
                 const userCode = document.getElementById('param-user-code').value;
                 try {
                     const response = await fetch(`${API_URL}/reload-model`, {
@@ -671,7 +672,7 @@
             });
         }
         async function deleteModel(name) {
-            customAlert(`¿Eliminar el modelo ${name}?`, 'confirm', async () => {
+            customAlert(`¿Eliminar modelo ${name}?`, 'confirm', async () => {
                 const userCode = document.getElementById('param-user-code').value;
                 try {
                     const response = await fetch(`${API_URL}/delete-model`, {
@@ -777,7 +778,7 @@
                     const warningText = '<br><br><span class="text-xs text-red-400 font-bold uppercase block mt-2 pt-2 border-t border-red-900/50">Procesamiento interrumpido por el usuario.</span>';
                     if (aiTarget.innerHTML.includes('typing-indicator')) { aiTarget.innerHTML = warningText; }
                     else { aiTarget.innerHTML += warningText; }
-                } else { aiTarget.innerHTML = 'Error en la conexión: ' + err.message; }
+                } else { aiTarget.innerHTML = 'Error de conexión: ' + err.message; }
             } finally {
                 const typingIndicator = aiTarget.querySelector('.typing-indicator');
                 if (typingIndicator) { typingIndicator.remove(); }
@@ -824,6 +825,8 @@
             let fullAnswer = "";
             let buffer = ""; 
             let lastChunkData = null;
+            let previousResponse = "";
+            if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].role === 'assistant') { previousResponse = conversationHistory[conversationHistory.length - 1].content; }
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
@@ -837,7 +840,9 @@
                         if (chunk.answer) {
                             streamTokenCount++;
                             lastChunkData = chunk;
-                            fullAnswer = chunk.answer;
+                            let currentAnswer = chunk.answer;
+                            if (previousResponse && currentAnswer.startsWith(previousResponse) && currentAnswer.length > previousResponse.length) { currentAnswer = currentAnswer.substring(previousResponse.length).trimStart(); }
+                            fullAnswer = currentAnswer;
                             target.innerHTML = marked.parse(formatSpecialBlocks(fullAnswer, true));
                             container.scrollTop = container.scrollHeight;
                             if (streamTokenCount == 1) { stop_timer = true; }
@@ -849,13 +854,17 @@
                 try {
                     const chunk = JSON.parse(buffer);
                     lastChunkData = chunk;
-                    fullAnswer = chunk.answer;
+                    let currentAnswer = chunk.answer;
+                    if (previousResponse && currentAnswer.startsWith(previousResponse) && currentAnswer.length > previousResponse.length) { currentAnswer = currentAnswer.substring(previousResponse.length).trimStart(); }
+                    fullAnswer = currentAnswer;
                     target.innerHTML = marked.parse(formatSpecialBlocks(fullAnswer, true));
                 } catch(e) {}
             }
             if (lastChunkData) {
                 processMetadata(aiMessageWrapper, lastChunkData);
                 processCodeBlocks(target);
+                const codeBlockCount = (fullAnswer.match(/```/g) || []).length;
+                if (codeBlockCount % 2 !== 0) { fullAnswer += '\n```\n'; }
                 conversationHistory.push({ role: 'assistant', content: fullAnswer });
                 renderMathInElement(aiMessageWrapper);
                 const actions = aiMessageWrapper.querySelector('.msg-actions');
@@ -868,16 +877,25 @@
         }
         function renderFullResponse(data, wrapper) {
             const target = wrapper.querySelector('.msg-content');
-            const displayContent = formatSpecialBlocks(data.answer);
+            let finalAnswer = data.answer;
+            let previousResponse = "";
+            if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].role === 'assistant') {
+                previousResponse = conversationHistory[conversationHistory.length - 1].content;
+                if (finalAnswer.startsWith(previousResponse) && finalAnswer.length > previousResponse.length) { finalAnswer = finalAnswer.substring(previousResponse.length).trimStart(); }
+            }
+            const displayContent = formatSpecialBlocks(finalAnswer);
             target.innerHTML = marked.parse(displayContent);
             processCodeBlocks(target);
+            data.answer = finalAnswer;
             processMetadata(wrapper, data);
-            conversationHistory.push({ role: 'assistant', content: data.answer });
+            const codeBlockCount = (finalAnswer.match(/```/g) || []).length;
+            if (codeBlockCount % 2 !== 0) { finalAnswer += '\n```\n'; }
+            conversationHistory.push({ role: 'assistant', content: finalAnswer });
             renderMathInElement(wrapper);
             const actions = wrapper.querySelector('.msg-actions');
             if (actions) {
                 actions.classList.remove('hidden');
-                actions.querySelector('[title="Copiar Respuesta"]').dataset.rawContent = data.answer;
+                actions.querySelector('[title="Copiar Respuesta"]').dataset.rawContent = finalAnswer;
             }
             document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
         }
@@ -953,7 +971,7 @@
         window.downloadFileBase64 = (base64, type) => {
             const link = document.createElement('a');
             link.href = `data:application/octet-stream;base64,${base64}`;
-            link.download = `arquivo_${Date.now()}.${type}`;
+            link.download = `archivo_${Date.now()}.${type}`;
             link.click();
         };
         function processMetadata(div, data) {
@@ -1050,18 +1068,20 @@
                 }
                 if (hasCharts) {
                     data.javascript_charts.forEach((chartCode, idx) => {
+                        const uniqueId = Math.random().toString(36).substr(2, 9);
                         const chartSession = document.createElement('div');
                         const toolbar = document.createElement('div');
                         toolbar.className = "flex justify-between items-center mb-2 bg-slate-900/50 p-2 rounded-t-lg border-x border-t border-slate-700";
+                        window[`expandChart_${uniqueId}`] = () => openFullscreen(`Gráfico ${idx + 1}`, chartCode);
                         toolbar.innerHTML = `
                             <div class="text-[10px] text-blue-400 uppercase font-bold flex items-center gap-1"><i data-lucide="bar-chart-3" size="10"></i> Gráfico ${idx + 1}</div>
                             <div class="flex gap-2">
-                                <button onclick="window.expandChart(${idx})" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white"><i data-lucide="maximize" size="14"></i></button>
+                                <button onclick="window.expandChart_${uniqueId}()" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white"><i data-lucide="maximize" size="14"></i></button>
                             </div>
                         `;
-                        window.expandChart = (i) => openFullscreen(`Gráfico ${i+1}`, data.javascript_charts[i]);
                         const iframe = document.createElement('iframe');
                         iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                        iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                         iframe.srcdoc = chartCode.includes('<html') ? chartCode : `<!DOCTYPE html><html><body>${chartCode}</body></html>`;
                         chartSession.appendChild(toolbar);
                         chartSession.appendChild(iframe);
@@ -1070,43 +1090,38 @@
                 }
                 if (hasArtifacts && typeof data.artifacts[0] === 'string') {
                     const escapeHtml = (text) => text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    window.expandArtifact = (i) => openFullscreen(`Artefacto ${i+1}`, data.artifacts[i]);
-                    window.viewArtifactCode = (i) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        const codeViewHtml = `<div style="padding: 20px; background: #0f172a; color: #e2e8f0; height: 100%; overflow: auto; font-family: monospace; white-space: pre-wrap;">${escapeHtml(htmlContent)}</div>`;
-                        openFullscreen(`Código Fonte - Artefacto ${i+1}`, codeViewHtml);
-                    };
-                    window.downloadArtifact = (i) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<head><meta charset="UTF-8"></head>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        const blob = new Blob([htmlContent], { type: 'text/html' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `artefato_${i+1}.html`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        URL.revokeObjectURL(url);
-                    };
-                    window.copyArtifactCode = (i, btnElement) => {
-                        let htmlContent = data.artifacts[i];
-                        if (!htmlContent.includes('<html')) { htmlContent = `<!DOCTYPE html>\n<html>\n<body>\n${htmlContent}\n</body>\n</html>`; }
-                        navigator.clipboard.writeText(htmlContent).then(() => {
-                            const originalHtml = btnElement.innerHTML;
-                            btnElement.innerHTML = `<i data-lucide="check" size="14" class="text-emerald-400"></i>`;
-                            if (window.lucide) window.lucide.createIcons();
-                            setTimeout(() => {
-                                btnElement.innerHTML = originalHtml;
-                                if (window.lucide) window.lucide.createIcons();
-                            }, 2000);
-                        }).catch(err => {
-                            console.error('Error al copiar el código: ', err);
-                            alert('Fallo al copiar el código.');
-                        });
-                    };
                     data.artifacts.forEach((htmlCode, idx) => {
+                        const uniqueId = Math.random().toString(36).substr(2, 9);
+                        window[`expandArtifact_${uniqueId}`] = () => openFullscreen(`Artefacto ${idx+1}`, htmlCode);
+                        window[`viewArtifactCode_${uniqueId}`] = () => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            const codeViewHtml = `<div style="padding: 20px; background: #0f172a; color: #e2e8f0; height: 100%; overflow: auto; font-family: monospace; white-space: pre-wrap;">${escapeHtml(content)}</div>`;
+                            openFullscreen(`Código Fuente - Artefacto ${idx+1}`, codeViewHtml);
+                        };
+                        window[`downloadArtifact_${uniqueId}`] = () => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<head><meta charset="UTF-8"></head>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            const blob = new Blob([content], { type: 'text/html' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `artefacto_${idx+1}.html`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        };
+                        window[`copyArtifactCode_${uniqueId}`] = (btnElement) => {
+                            let content = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html>\n<html>\n<body>\n${htmlCode}\n</body>\n</html>`;
+                            navigator.clipboard.writeText(content).then(() => {
+                                const originalHtml = btnElement.innerHTML;
+                                btnElement.innerHTML = `<i data-lucide="check" size="14" class="text-emerald-400"></i>`;
+                                if (window.lucide) window.lucide.createIcons();
+                                setTimeout(() => {
+                                    btnElement.innerHTML = originalHtml;
+                                    if (window.lucide) window.lucide.createIcons();
+                                }, 2000);
+                            });
+                        };
                         const artifactSession = document.createElement('div');
                         const toolbar = document.createElement('div');
                         toolbar.className = "flex justify-between items-center mb-2 bg-slate-900/50 p-2 rounded-t-lg border-x border-t border-slate-700";
@@ -1115,22 +1130,23 @@
                                 <i data-lucide="layout" size="10"></i> Artefacto ${idx + 1}
                             </div>
                             <div class="flex gap-2">
-                                <button onclick="window.viewArtifactCode(${idx})" title="Visualizar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.viewArtifactCode_${uniqueId}()" title="Ver Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="code" size="14"></i>
                                 </button>
-                                <button onclick="window.copyArtifactCode(${idx}, this)" title="Copiar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.copyArtifactCode_${uniqueId}(this)" title="Copiar Código" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="copy" size="14"></i>
                                 </button>
-                                <button onclick="window.downloadArtifact(${idx})" title="Baixar Artefacto" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.downloadArtifact_${uniqueId}()" title="Descargar Artefacto" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="download" size="14"></i>
                                 </button>
-                                <button onclick="window.expandArtifact(${idx})" title="Expandir a Pantalla Completa" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
+                                <button onclick="window.expandArtifact_${uniqueId}()" title="Expandir a Pantalla Completa" class="p-1.5 hover:bg-slate-700 rounded transition text-slate-400 hover:text-white">
                                     <i data-lucide="maximize" size="14"></i>
                                 </button>
                             </div>
                         `;
                         const iframe = document.createElement('iframe');
                         iframe.className = "w-full rounded-b-xl bg-white border border-slate-600 shadow-2xl h-[500px]";
+                        iframe.setAttribute('sandbox', 'allow-scripts allow-modals allow-forms allow-popups');
                         iframe.srcdoc = htmlCode.includes('<html') ? htmlCode : `<!DOCTYPE html><html><body>${htmlCode}</body></html>`;
                         artifactSession.appendChild(toolbar);
                         artifactSession.appendChild(iframe);
@@ -1223,7 +1239,7 @@
                 document.getElementById('training-progress-bar').style.width = '100%';
                 document.getElementById('training-progress-text').innerText = '100%';
                 setTimeout(() => {
-                    const msg = res.success ? `¡Tarea concluida con éxito en ${formatTime(elapsedMilliseconds)}!` : "La tarea falló.";
+                    const msg = res.success ? `¡Tarea completada con éxito en ${formatTime(elapsedMilliseconds)}!` : "La tarea falló.";
                     customAlert(msg, "alert", () => {
                         statusDiv.classList.add('hidden');
                         document.getElementById('training-progress-bar').style.width = '0%';
