@@ -72,14 +72,6 @@ If you have problems with terminal characters on **Windows**, run the command be
 reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
 ```
 
-### Installation with NVIDIA GPU support
- 
-If you have an NVIDIA graphics card, run the following command to recompile llama-cpp-python with GPU (CUDA) support:
- 
-```bash
-CMAKE_ARGS="-DGGML_CUDA=on" FORCE_CMAKE=1 pip install llama-cpp-python==0.3.6 --force-reinstall --no-cache-dir
-```
-
 ## Usage
 
 ### Execution arguments
