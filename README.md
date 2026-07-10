@@ -138,6 +138,8 @@ sapilm --api
 
 **User Interface: [http://localhost:8080/](http://localhost:8080/)**
 
+![SapiLM](UserInterface.png)
+
 ### Model repair
 In some cases, the model may become corrupted if there is not enough memory in the system at the time of execution or if the model is abruptly terminated in a non-conventional manner. If this happens, your model will not load in the next execution, or if it does, it will start returning nonsensical responses. In these cases, it is possible to repair the model so that it works correctly again:
 ```bash
