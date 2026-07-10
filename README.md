@@ -138,6 +138,8 @@ sapilm --api
 
 **User Interface: [http://localhost:8080/](http://localhost:8080/)**
 
+**Or download and run the HTML page: [user_interface.html](user_interface.html)**
+
 ![SapiLM](UserInterface.png)
 
 ### Model repair
