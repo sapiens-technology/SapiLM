@@ -631,11 +631,15 @@
                 } catch(e) { console.error('Erro ao restaurar mídia:', e); }
             }
         }
+        let custom_alert = false;
         function saveSessions() {
             try { localStorage.setItem('sapiens_sessions', JSON.stringify(allSessions)); } 
             catch (e) {
                 console.warn('Limite de armazenamento atingido ou erro no LocalStorage:', e);
-                customAlert('O limite de memória do navegador foi atingido. Apague conversas antigas para liberar espaço.', 'alert');
+                if(!custom_alert) {
+                    customAlert('O limite de memória do navegador foi atingido. Apague conversas antigas para liberar espaço.', 'alert');
+                    custom_alert = true;
+                }
             }
         }
         function loadSessions() {
