@@ -10,7 +10,10 @@ The SapiLM is proprietary software developed by Sapiens Technology®️, created
 
 Install Python 3.11 and create a virtual environment with that version.
 
-Here's an example of how to do this on Linux or Mac:
+### Here's an example of how to do this on Linux or Mac:
+
+<sub>*Creating a virtual environment is OPTIONAL, as long as you have Python 3.11 installed on the main machine.*</sub>
+
 ---
 <sub>On Linux and macOS:</sub>
 ```bash
@@ -47,7 +50,8 @@ Linux:
 Python 3.11.8
 ```
 
-Update the pip package manager:
+### Update the pip package manager:
+
 ---
 <sub>On Linux and macOS:</sub>
 ```bash
