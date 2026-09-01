@@ -811,10 +811,9 @@ Validation completed SUCCESSFULLY!
 
 After validating your key, you will see the message `[VALIDATED] DAYS REMAINING: 10` displaying the number of days your key remains valid (in this example: 10). After this period has elapsed, a new validation must be performed using a new key generated via the `--outkey` command. On some systems, the company name in the terminal may also change color from red to green while SapiLM is validated.
 
-## --creativity
-
-Accepts a percentage value between 0 and 1 for the creativity level of the model loaded for terminal-screen inference.
-
+```bash
+sapilm
+```
 ```bash
 
              ███████  █████  ██████  ██ ███████ ███    ██ ███████ 
@@ -833,7 +832,112 @@ Accepts a percentage value between 0 and 1 for the creativity level of the model
 SAPIENS TECHNOLOGY local server fully operational [Control+C to terminate]...
 [All models were loaded SUCCESSFULLY! User interface at: http://localhost:8080/]
 ```
+
+## --creativity
+
+Accepts a percentage value between 0 and 1 for the creativity level of the model loaded for terminal-screen inference.
+
 ```bash
+sapilm --load model_name_1 --creativity 0.5
+```
+```bash
+PROMPT:
+Tell a story about a young woman in a forest.
+SAPIENS:
+In the small village of São João, lived a young woman named Ana, who had a special passion for flowers and plants. The forest surrounding the village was a paradise for her, full of mysteries and enchantments that she longed to explore. One day, she decided to venture beyond her usual path in the forest, eager to discover something new.
+
+Upon entering a clearing covered with beautiful multicolored flowers, Ana noticed that the sunlight filtered through the leaves above, forming dancing patterns around her. She walked along a narrow path, surrounded by bushes and ferns, until she reached an old fallen tree trunk. 
+
+Feeling safe and curious, Ana decided to sit on the trunk. Soon, she noticed something strange: small bubbles of light began to appear on the surface of the trunk. The young woman was enchanted by the sight, and gradually, the bubbles merged to form a figure. It was a small fairy, glowing and full of life.
+
+The fairy smiled at Ana and said, in a soft and musical voice: "Welcome, guardian of the forest. You have a pure heart and a curious soul. Your presence here has brought new life to the forest." 
+
+Ana was surprised and moved, but not scared. The fairy continued, explaining that the flowers and plants of the forest were in danger due to human action. She asked Ana to become her ally, helping to protect and care for the forest.
+
+With a heart full of determination, Ana accepted the mission. From then on, she began to care for the forest, protecting its plants and animals. And whenever she visited the tree trunk, the fairy would come to her, offering advice and encouragement on her journey to protect the place she loved so much.
+
+Thus, Ana discovered that the true beauty of the forest resided as much in the life she could see as in the life that lived invisible to human eyes. And since that day, she never tired of exploring and learning from the magic of the forest.
+PROMPT:
+
+
+
+
+
+
+
+
+
+
+                               Load: 00:00:20.4329 | TTFT: 00:00:19.9743 | TPS: 7.7695 | MPS: 53.1% | R: Yes | W: Yes | Net: Yes 
+```
+
+```bash
+sapilm --load 1 --creativity 0.9
+```
+```bash
+PROMPT:
+Tell a story about a young woman in a forest.
+SAPIENS:
+The young woman Maria always loved to explore, but she had never ventured as far from the city as on that day. With curiosity and a thirst for adventure, she decided to walk through the forest that was close to her home, but which she had never explored before. 
+
+Maria kept a calm pace, observing the beauty of nature around her. She passed by tall, shaded trees that made the sunlight dance on the ground, and heard the singing of the birds, which echoed through the forest. Every step she took drew her deeper and deeper into the forest.
+
+Gradually, she realized that she might be lost. The forest paths, which once seemed so familiar, now looked different and strange. She tried to remember the direction she had come from, but the forest was so vast and similar that everything blurred together in her memory.
+
+Maria began to worry. She had no food or water with her. Night was approaching, and the forest was becoming increasingly dark and frightening. She stopped to think. What to do? She needed to stay calm.
+
+First, she decided to look for water. She knew she needed to stay hydrated. She walked for a while, following the sound of a stream, and found a small, crystal-clear stream of running water. 
+
+Next, she decided to find a place to spend the night. She needed to rest and think of a plan. She found a clearing surrounded by tall trees, which would protect her from the night wind. She made a small shelter out of dry leaves and branches, and lay down to try and rest.
+
+The following day, with the sun rising, Maria was calmer. She decided to follow the direction of the stream, hoping it would lead somewhere familiar. She walked for hours, following the sound of the stream, and finally, she saw a sign of man - a piece of paper tied to a tree with a drawn map. Maria followed the map's instructions and was soon in the clearing where tourists usually stopped to take pictures of an incredible view.
+
+Maria was happy to be back on a familiar path. She learned an important lesson about the importance of being prepared for nature and the importance of not despairing. She returned home, not only with the story of a lost adventure, but also with a new appreciation for the beauty and danger of the forest.
+PROMPT:
+
+
+
+
+
+
+
+
+
+
+                               Load: 00:00:15.7237 | TTFT: 00:00:15.3271 | TPS: 7.7978 | MPS: 53.1% | R: Yes | W: Yes | Net: Yes                                           
+
+```
+
+```bash
+sapilm --load 1 --creativity 0.1
+```
+```bash
+PROMPT:
+Tell a story about a young woman in a forest.
+SAPIENS:
+Once upon a time, in a dense and mysterious forest, there was a young woman named Clara. She was a curious girl, with a kind heart and an unwavering thirst for adventure. One morning, upon waking, she decided to explore the forest that surrounded her small village.
+
+Armed only with her backpack, a rudimentary map, and a heart full of enthusiasm, Clara entered the forest. As she walked, the density of the trees and the singing of the birds enveloped her in a cloak of mystery. The shadows of the leaves danced in the sunlight, creating a tapestry of light and shadow beneath her feet.
+
+As she walked, she found signs of animal life everywhere. Animal tracks, nests high in the trees, and even footprints that she was careful to follow. The colors of the forest were almost hypnotic, from the vibrant green leaves to the colorful flowers sprouting from the shadows.
+
+As the day progressed, Clara realized she had gotten lost. The rudimentary map didn't seem to be helping much. She tried to stay calm and use natural navigation, following the sun and the slope of the land. During her journey, she found a hidden waterfall, where the water fell with a soft and inviting sound. It was a place of unique beauty, and Clara felt at peace.
+
+After an exhausting walk, Clara found a small village hidden in the forest. The people who lived there were hospitable, and she spent the night there, telling stories of her adventure as she rested near a warm fireplace.
+
+The next day, at dawn, Clara headed back home, wiser and more self-assured than when she left. She had not only discovered the secrets of the forest, but also discovered the courage that was inside her. Clara never looked at the forest the same way again, and every time she entered its world of leaves and shadows, she brought with her the lesson she had learned: that, even in the most difficult times, beauty and courage can be found inside each of us.
+PROMPT:
+
+
+
+
+
+
+
+
+
+
+                               Load: 00:00:15.2674 | TTFT: 00:00:14.8400 | TPS: 7.8428 | MPS: 52.9% | R: Yes | W: Yes | Net: Yes                                           
 
 ```
 
@@ -1476,6 +1580,7 @@ sapilm --v
 ```bash
 SapiLM 1.1.9
 ```
+
 
 ## Contributing
 
