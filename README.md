@@ -1383,7 +1383,11 @@ PROMPT:
 
 ## --train
 
-Path to the dataset (preferably `.txt` or `.md`) that will be used to train a base model from scratch or to continue a previously executed base training.
+Path to the dataset (preferably `.json`, `.txt` or `.md`) that will be used to train a base model from scratch or to continue a previously executed base training.
+
+**JSON files in the following format will make training faster, potentially reducing completion time from days to hours:** `{"data": [{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]}` or `[{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]`.
+
+<sup>Add a string key named `url_path` with the path to a local or web file for training multimodal models.</sup>
 
 ```bash
 sapilm --train /Users/User/Documents/datasets/data.md
@@ -1520,6 +1524,7 @@ Path to the dataset (exclusively in `JSON` format matching the Sapiens standard)
 
 **Sapiens Standard JSON:** `{"data": [{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]}` or `[{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]`.
 
+<sup>Add a string key named `url_path` with the path to a local or web file for training multimodal models.</sup>
 
 First, we will generate a base model to fine-tune later:
 
