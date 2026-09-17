@@ -1385,7 +1385,15 @@ PROMPT:
 
 Path to the dataset (preferably `.json`, `.txt` or `.md`) that will be used to train a base model from scratch or to continue a previously executed base training.
 
-**Sapiens Standard JSON:** `{"data": [{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]}` or `[{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]`.
+**Sapiens Standard JSON:**
+
+```json
+{"data": [{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]}
+```
+or
+```json
+[{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]
+```
 
 <sup>Add a string key named `url_path` with the path to a local or web file for training multimodal models.</sup>
 
@@ -1522,7 +1530,15 @@ sapilm --list
 
 Path to the dataset (exclusively in `JSON` format matching the Sapiens standard) used to apply a fine-tuning to a pre-trained model.
 
-**Sapiens Standard JSON:** `{"data": [{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]}` or `[{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]`.
+**Sapiens Standard JSON:**
+
+```json
+{"data": [{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]}
+```
+or
+```json
+[{"input": "string with a prompt sample...", "output": "string with a response sample..."}, ...]
+```
 
 <sup>Add a string key named `url_path` with the path to a local or web file for training multimodal models.</sup>
 
