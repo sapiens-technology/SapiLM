@@ -6,6 +6,14 @@ The SapiLM is proprietary software developed by Sapiens Technology®️, created
 
 ![SAPI](sapilm.png)
 
+## [Automatic installation via PyPI]
+
+```bash
+pip install sapilm
+```
+
+Simply run the command `pip install sapilm`, or follow the instructions below to install it manually:
+
 ## Recommendation
 
 Install Python 3.11 and create a virtual environment with that version.
