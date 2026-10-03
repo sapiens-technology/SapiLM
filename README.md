@@ -6,7 +6,7 @@ The SapiLM is proprietary software developed by Sapiens Technology®️, created
 
 ![SAPI](sapilm.png)
 
-## [Automatic installation via PyPI]
+## [Automatic installation via [PyPI](https://pypi.org/project/sapilm/)]
 
 ```bash
 pip install sapilm
