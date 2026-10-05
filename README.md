@@ -12,6 +12,8 @@ The SapiLM is proprietary software developed by Sapiens Technology®️, created
 pip install sapilm
 ```
 
+Note: You can check the installation by running the command `sapilm --version`, which will display the current version of SapiLM. The first command you run after installation will download the rest of the dependencies, so wait until all installations are complete. Once all dependencies are installed, the terminal will clear the screen, so wait a few seconds until the result of your command is displayed.
+
 Simply run the command `pip install sapilm`, or follow the instructions below to install it manually:
 
 ## Recommendation
